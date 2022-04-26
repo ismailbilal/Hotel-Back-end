@@ -24,8 +24,7 @@
     "heroku"
   ],
   "type": "module",
-  "author": "jane-doe",
-  "license": "MIT",
+  "author": "ismail-bilal",
   "engines": {
     "node": "16.14.0"
   }
