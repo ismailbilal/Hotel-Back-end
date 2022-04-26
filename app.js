@@ -8,6 +8,7 @@ import user from "./src/routes/user.js";
 import admin from "./src/routes/admin.js";
 
 config();
+const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,5 +18,5 @@ app.use("/", locality);
 app.use("/", city);
 app.use("/", user);
 app.use("/", admin);
-app.listen(process.env.PORT);
-console.log("server started at http://localhost%d", process.env.PORT);
+app.listen(port);
+console.log("server started at http://localhost%d", port);
