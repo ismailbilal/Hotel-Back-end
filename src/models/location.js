@@ -3,10 +3,10 @@ import { config } from "dotenv";
 import { nanoid } from "nanoid";
 config();
 
-const { url, db_username, db_password, database } = process.env;
+const { URL, DB_USERNAME, DB_PASSWORD, DATABASE } = process.env;
 
-const driver = neo4j.driver(url, neo4j.auth.basic(db_username, db_password));
-const session = driver.session({ database });
+const driver = neo4j.driver(URL, neo4j.auth.basic(DB_USERNAME, DB_PASSWORD));
+const session = driver.session({ DATABASE });
 
 const findAll = async () => {
   const result = await session.run(`MATCH (n:Location) RETURN n`);
