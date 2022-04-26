@@ -8,7 +8,7 @@ import user from "./src/routes/user.js";
 import admin from "./src/routes/admin.js";
 
 config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
