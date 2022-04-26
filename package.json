@@ -14,10 +14,16 @@
     "express": "^4.17.3",
     "nanoid": "^3.3.1",
     "neo4j-driver": "^4.4.5",
-    "node-fetch": "^3.2.3"
+    "node-fetch": "^3.2.3",
+    "server": "^1.0.37"
   },
   "scripts": {
-    "start": "node app.js"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [
     "example",
