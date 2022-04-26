@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "index.js",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.17.8",
@@ -18,7 +18,7 @@
     "serve": "^13.0.2"
   },
   "scripts": {
-    "start": "node app"
+    "start": "node index.js"
   },
   "keywords": [
     "example",
@@ -27,6 +27,7 @@
   "type": "module",
   "author": "ismail-bilal",
   "engines": {
-    "node": "16.14.0"
+    "node": "16.14.0",
+    "npm": "8.3.1"
   }
 }
