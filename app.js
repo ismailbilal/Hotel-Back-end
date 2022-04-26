@@ -8,15 +8,23 @@ import user from "./src/routes/user.js";
 import admin from "./src/routes/admin.js";
 
 config();
-const port = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 const app = express();
+
+app.set("port", PORT);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", hotel);
-app.use("/", location);
-app.use("/", locality);
-app.use("/", city);
-app.use("/", user);
-app.use("/", admin);
-app.listen(port);
-console.log("server started at http://localhost%d", port);
+// app.use("/", hotel);
+// app.use("/", location);
+// app.use("/", locality);
+// app.use("/", city);
+// app.use("/", user);
+// app.use("/", admin);
+app.listen(process.env.PORT || 3000, function () {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
+});
+console.log("server started at http://localhost%d", PORT);
