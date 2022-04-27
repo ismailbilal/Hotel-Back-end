@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import express from "express";
 import { config } from "dotenv";
+import cors from "cors";
 import hotel from "./src/routes/hotel.js";
 import location from "./src/routes/location.js";
 import locality from "./src/routes/locality.js";
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   fetch("https://www.boredapi.com/api/activity") // fetch activity from bored API - https://www.boredapi.com/about
