@@ -64,12 +64,12 @@ const login = async (email, password) => {
   const user = await findByEmail(email);
   if (user) {
     if (password == user.password) {
-      return { massage: "succes" };
+      return { message: "succes" };
     } else {
       return { message: "password incorrect" };
     }
   } else {
-    return { massage: "email incorrect" };
+    return { message: "email incorrect" };
   }
 };
 

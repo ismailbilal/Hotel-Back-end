@@ -97,12 +97,12 @@ const login = async (username, password) => {
   const user = await findByUsername(username);
   if (user) {
     if (password == user.password) {
-      return { massage: "succes" };
+      return { message: "succes" };
     } else {
       return { message: "password incorrect" };
     }
   } else {
-    return { massage: "username incorrect" };
+    return { message: "username incorrect" };
   }
 };
 
