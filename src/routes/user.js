@@ -38,5 +38,13 @@ user.post("/user/login", async (req, res) => {
   const result = await userModel.login(req.body.username, req.body.password);
   res.json(result);
 });
+user.post("/user/accepted", async (req, res) => {
+  const result = await userModel.accepted(
+    req.body.username,
+    req.body.email,
+    req.body.password
+  );
+  res.json(result);
+});
 
 export default user;

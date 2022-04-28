@@ -106,6 +106,22 @@ const login = async (username, password) => {
   }
 };
 
+const accepted = async (username, email, password) => {
+  if (username === "") {
+    return { message: "Username cannot be blank" };
+  } else if (await findByUsername(username)) {
+    return { message: "Username already exist" };
+  } else if (email === "") {
+    return { message: "Email cannot be blank" };
+  } else if (await findByEmail(email)) {
+    return { message: "Email already exist" };
+  } else if (password === "") {
+    return { message: "Password cannot be blank" };
+  } else {
+    return { message: "accepted" };
+  }
+};
+
 export default {
   findAll,
   findById,
@@ -116,4 +132,5 @@ export default {
   createRelationshipHasVisit,
   getHotelsVisited,
   login,
+  accepted,
 };

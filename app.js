@@ -10,7 +10,7 @@ import user from "./src/routes/user.js";
 import admin from "./src/routes/admin.js";
 
 config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
