@@ -6,21 +6,25 @@ config();
 const { URL, DB_USERNAME, DB_PASSWORD, DATABASE } = process.env;
 
 const driver = neo4j.driver(URL, neo4j.auth.basic(DB_USERNAME, DB_PASSWORD));
-const session = driver.session({ DATABASE });
 
 const findAll = async () => {
+  const session = driver.session({ DATABASE });
   const result = await session.run(`MATCH (n:Locality) RETURN n`);
+  session.close();
   return result.records.map((i) => i.get("n").properties);
 };
 
 const findById = async (id) => {
+  const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (n:Locality {_id: "${id}"}) RETURN n LIMIT 1`
   );
+  session.close();
   return result.records[0].get("n").properties;
 };
 
 const create = async (obj) => {
+  const session = driver.session({ DATABASE });
   const writeParm = (parm) => parm || "NULL";
 
   const result = await session.run(
@@ -28,43 +32,54 @@ const create = async (obj) => {
       8
     )}" RETURN n`
   );
+  session.close();
   return result.records[0].get("n").properties;
 };
 
 const findByIdAndUpdate = async (id, obj) => {
+  const session = driver.session({ DATABASE });
   // n.name = "${obj.name}", n.address="${obj.address}"
   const result = await session.run(
     `MATCH (n:Locality {_id: "${id}"}) SET n.name= "${obj.name}" RETURN n`
   );
+  session.close();
   return result.records[0].get("n").properties;
 };
 
 const findBYIdAndDelete = async (id) => {
+  const session = driver.session({ DATABASE });
   await session.run(`MATCH (n:Locality {_id: "${id}"}) DELETE n`);
+  session.close();
   return await findAll();
 };
 
 const findLocation = async (id) => {
+  const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (l:Locality {_id: "${id}"})<-[:POSITIONED_IN]-(lo:Location) RETURN lo`
   );
+  session.close();
   return result.records.map((i) => i.get("lo").properties);
 };
 
 const createRelationshipToCity = async (localityId, cityId) => {
+  const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (l:Locality {_id: "${localityId}"}),
     (c:City {_id: "${cityId}"})
     MERGE (l)-[r:EXIST_IN]->(c)
     RETURN l, r, c`
   );
+  session.close();
   return result.records;
 };
 
 const findCity = async (id) => {
+  const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (l:Locality {_id: "${id}"})-[:EXIST_IN]->(c:City) RETURN c`
   );
+  session.close();
   return result.records[0].get("c").properties;
 };
 
