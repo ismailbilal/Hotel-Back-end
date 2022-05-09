@@ -53,13 +53,14 @@ const findBYIdAndDelete = async (id) => {
   return await findAll();
 };
 
-const findLocation = async (id) => {
+const findHotels = async (id) => {
   const session = driver.session({ DATABASE });
   const result = await session.run(
-    `MATCH (l:Locality {_id: "${id}"})<-[:POSITIONED_IN]-(lo:Location) RETURN lo`
+    `MATCH (l:Locality {_id: 'S7taec_G'})<-[r:POSITIONED_IN]-(p:Location)<-[r2:LOCATED_IN]-(h:Hotel)
+    RETURN h`
   );
   session.close();
-  return result.records.map((i) => i.get("lo").properties);
+  return result.records.map((i) => i.get("h").properties);
 };
 
 const createRelationshipToCity = async (localityId, cityId) => {
@@ -89,7 +90,7 @@ export default {
   create,
   findByIdAndUpdate,
   findBYIdAndDelete,
-  findLocation,
+  findHotels,
   createRelationshipToCity,
   findCity,
 };
