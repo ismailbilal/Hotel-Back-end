@@ -4,7 +4,10 @@ import hotelModel from "../models/hotel.js";
 const hotel = Router();
 
 hotel.get("/hotel", async (req, res) => {
-  const result = await hotelModel.findAll();
+  const result = await hotelModel.findAll(
+    req.query.sortingType,
+    req.query.order
+  );
   res.json(result);
 });
 hotel.get("/hotel/:id", async (req, res) => {

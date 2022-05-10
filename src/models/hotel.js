@@ -7,9 +7,11 @@ const { URL, DB_USERNAME, DB_PASSWORD, DATABASE } = process.env;
 
 const driver = neo4j.driver(URL, neo4j.auth.basic(DB_USERNAME, DB_PASSWORD));
 
-const findAll = async () => {
+const findAll = async (sortingType = "name", order = "asc") => {
   const session = driver.session({ DATABASE });
-  const result = await session.run(`MATCH (n:Hotel) RETURN n`);
+  const result = await session.run(
+    `MATCH (n:Hotel) RETURN n ORDER BY n.${sortingType} ${order}`
+  );
   session.close();
   return result.records.map((i) => i.get("n").properties);
 };
