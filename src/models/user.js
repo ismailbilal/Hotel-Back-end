@@ -156,6 +156,15 @@ const rateHotel = async (userId, hotelId, rating, comment) => {
   return result.records[0]?.get("r").properties;
 };
 
+const getIdByUsername = async (username) => {
+  const session = driver.session({ DATABASE });
+  const result = await session.run(
+    `MATCH  (u:User {username: "${username}"}) 
+    RETURN u._id AS id`
+  );
+  return result.records[0]?.get("id");
+};
+
 export default {
   findAll,
   findById,
@@ -168,4 +177,5 @@ export default {
   login,
   accepted,
   rateHotel,
+  getIdByUsername,
 };

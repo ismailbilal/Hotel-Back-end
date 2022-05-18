@@ -55,5 +55,9 @@ user.post("/user/:userId/rate/hotel/:hotelId", async (req, res) => {
   );
   res.json(result);
 });
+user.get("/user/:username/id", async (req, res) => {
+  const result = await userModel.getIdByUsername(req.params.username);
+  res.json(result);
+});
 
 export default user;
