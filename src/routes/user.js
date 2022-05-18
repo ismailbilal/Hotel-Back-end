@@ -46,5 +46,14 @@ user.post("/user/accepted", async (req, res) => {
   );
   res.json(result);
 });
+user.post("/user/:userId/rate/hotel/:hotelId", async (req, res) => {
+  const result = await userModel.rateHotel(
+    req.params.userId,
+    req.params.hotelId,
+    req.body.rating,
+    req.body.comment
+  );
+  res.json(result);
+});
 
 export default user;

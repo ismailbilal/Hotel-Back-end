@@ -22,7 +22,7 @@ const findById = async (id) => {
     `MATCH (n:Hotel {_id: "${id}"}) RETURN n LIMIT 1`
   );
   session.close();
-  return result.records[0].get("n").properties;
+  return result.records[0]?.get("n").properties;
 };
 
 const create = async (obj) => {
