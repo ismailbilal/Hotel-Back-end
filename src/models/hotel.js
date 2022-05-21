@@ -78,6 +78,19 @@ const createReletionshipToLocation = async (hotelId, locationId) => {
   return result.records[0].get("r").properties;
 };
 
+const getReviews = async (hotelId) => {
+  const session = driver.session({ DATABASE });
+  const result = await session.run(
+    `MATCH (u:User)-[r:HAS_RATED]->(h:Hotel {_id: "${hotelId}"}) RETURN r, u ORDER BY r.date DESC`
+  );
+  session.close();
+  return result.records?.map((i) => {
+    const review = i.get("r").properties;
+    review.username = i.get("u").properties.username;
+    return review;
+  });
+};
+
 export default {
   findAll,
   findById,
@@ -86,4 +99,5 @@ export default {
   findBYIdAndDelete,
   findLocation,
   createReletionshipToLocation,
+  getReviews,
 };

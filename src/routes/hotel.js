@@ -37,5 +37,9 @@ hotel.post("/hotel/:hotelId/location/:locationId", async (req, res) => {
   );
   res.json(result);
 });
+hotel.get("/hotel/:hotelId/reviews", async (req, res) => {
+  const result = await hotelModel.getReviews(req.params.hotelId);
+  res.json(result);
+});
 
 export default hotel;
