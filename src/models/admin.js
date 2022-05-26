@@ -86,6 +86,15 @@ const login = async (email, password) => {
   }
 };
 
+const deleteReview = async (reviewId) => {
+  const session = driver.session({ DATABASE });
+  await session.run(
+    `MATCH (u:User)-[r:HAS_RATED {_id: "${reviewId}"}]->(h:Hotel) DELETE r`
+  );
+  session.close();
+  return true;
+};
+
 export default {
   findAll,
   findById,
@@ -94,4 +103,5 @@ export default {
   changePassword,
   changeEmail,
   login,
+  deleteReview,
 };

@@ -31,5 +31,9 @@ admin.post("/admin/login", async (req, res) => {
   const result = await adminModel.login(req.body.email, req.body.password);
   res.json(result);
 });
+admin.delete("/admin/review/:reviewId", async (req, res) => {
+  const result = await adminModel.deleteReview(req.params.reviewId);
+  res.json(result);
+});
 
 export default admin;

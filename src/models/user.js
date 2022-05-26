@@ -149,7 +149,9 @@ const rateHotel = async (userId, hotelId, rating, comment) => {
   const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (u:User {_id: "${userId}"}), (h:Hotel {_id: "${hotelId}"})
-    MERGE (u)-[r:HAS_RATED {rating: ${rating}, comment: "${comment}", date: datetime()}]->(h)
+    MERGE (u)-[r:HAS_RATED {_id: "${nanoid(
+      8
+    )}", rating: ${rating}, comment: "${comment}", date: datetime()}]->(h)
     RETURN u, r, h`
   );
   session.close();
