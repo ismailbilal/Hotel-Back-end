@@ -7,10 +7,10 @@ const { URL, DB_USERNAME, DB_PASSWORD, DATABASE } = process.env;
 
 const driver = neo4j.driver(URL, neo4j.auth.basic(DB_USERNAME, DB_PASSWORD));
 
-const findAll = async (sortingType = "name", order = "asc") => {
+const findAll = async (sortingType = "name", order = "asc", name = "") => {
   const session = driver.session({ DATABASE });
   const result = await session.run(
-    `MATCH (n:Hotel) RETURN n ORDER BY n.${sortingType} ${order}`
+    `MATCH (n:Hotel) WHERE n.name =~ '(?i)${name}.*'  RETURN n ORDER BY n.${sortingType} ${order} LIMIT 10`
   );
   session.close();
   return result.records.map((i) => i.get("n").properties);

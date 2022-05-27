@@ -6,7 +6,8 @@ const hotel = Router();
 hotel.get("/hotel", async (req, res) => {
   const result = await hotelModel.findAll(
     req.query.sortingType,
-    req.query.order
+    req.query.order,
+    req.query.name
   );
   res.json(result);
 });
