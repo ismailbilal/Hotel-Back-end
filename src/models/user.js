@@ -95,21 +95,39 @@ const createRelationshipHasVisit = async (userId, hotelId) => {
   const session = driver.session({ DATABASE });
   const result = await session.run(
     `MATCH (u:User {_id: "${userId}"}), (h:Hotel {_id: "${hotelId}"})
-    MERGE (u)-[v:HAS_VISITE]->(h)
+    MERGE (u)-[v:HAS_VISITE {_id: "${nanoid(8)}", date: datetime()}]->(h)
     RETURN u, v, h`
   );
   session.close();
   return result.records[0];
 };
 
+const hasVisited = async (userId, hotelId) => {
+  const session = driver.session({ DATABASE });
+  const result = await session.run(
+    `MATCH (u:User {_id: "${userId}"})-[r:HAS_VISITE]->(h:Hotel {_id: "${hotelId}"})
+    RETURN count(r) AS c`
+  );
+  session.close();
+  return result.records[0].get("c");
+};
+
 const getHotelsVisited = async (id) => {
   const session = driver.session({ DATABASE });
   const result = await session.run(
-    `MATCH (u:User {_id: "${id}"})-[:HAS_VISITE]->(h:Hotel)
-    RETURN h`
+    `MATCH (u:User {_id: "${id}"})-[r:HAS_VISITE]->(h:Hotel)
+    RETURN h, r, u`
   );
   session.close();
-  return result.records.map((i) => i.get("h").properties);
+  return result.records.map((i) => {
+    const relation = i.get("r").properties;
+    const hotel = i.get("h").properties;
+    const obj = {
+      ...relation,
+      ...hotel,
+    };
+    return obj;
+  });
 };
 
 const login = async (username, password) => {
@@ -181,4 +199,5 @@ export default {
   accepted,
   rateHotel,
   getIdByUsername,
+  hasVisited,
 };

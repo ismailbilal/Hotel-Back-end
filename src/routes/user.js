@@ -59,5 +59,12 @@ user.get("/user/:username/id", async (req, res) => {
   const result = await userModel.getIdByUsername(req.params.username);
   res.json(result);
 });
+user.get("/user/:userId/hasvisit/hotel/:hotelId", async (req, res) => {
+  const result = await userModel.hasVisited(
+    req.params.userId,
+    req.params.hotelId
+  );
+  res.json(result);
+});
 
 export default user;
