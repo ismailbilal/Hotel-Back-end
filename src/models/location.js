@@ -54,9 +54,9 @@ const findByIdAndUpdate = async (id, obj) => {
 
 const findBYIdAndDelete = async (id) => {
   const session = driver.session({ DATABASE });
-  await session.run(`MATCH (n:Location {_id: "${id}"}) DELETE n`);
+  await session.run(`MATCH (n:Location {_id: "${id}"}) DETACH DELETE n`);
   session.close();
-  return await findAll();
+  return 1;
 };
 
 const findHotel = async (id) => {
